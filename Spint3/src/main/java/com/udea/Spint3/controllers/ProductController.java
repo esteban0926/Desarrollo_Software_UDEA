@@ -11,10 +11,13 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    /*
     @GetMapping("/products")
     public List<Product> getProducts(){
         return productService.getProducts();
     }
+
+     */
     @PostMapping("/addProduct")
     public Product saveProduct(@RequestBody Product product){
         double total = product.getPrecio() * product.getCantidad();
@@ -34,5 +37,9 @@ public class ProductController {
     @DeleteMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable Integer id){
         return productService.deleteProduct(id);
+
     }
 }
+
+
+

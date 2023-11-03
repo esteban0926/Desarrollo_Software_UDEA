@@ -17,6 +17,8 @@ public class Product {
     private int cantidad;
     @Column
     private double Total;
+    @Column
+    private String imagen;
 
     //Getter y Setter
     public Integer getId() {
@@ -65,5 +67,13 @@ public class Product {
 
     public void setTotal(double total) {
         Total = total;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
