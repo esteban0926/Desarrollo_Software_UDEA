@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html     xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Start Pets</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/">Start Pets</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/}">Productos</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/signup}">Registrarse</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Product Section-->
+<section class="page-section mt-4" id="Product">
+    <div class="container">
+        <!-- Product Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Cambiar Productos</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-paw"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Product Section Form-->
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+
+                <form th:action = "@{/updateproduct/{id} (id=${product.id}) }" th:method="put" th:object ="${product}" id="ProductForm" >
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        <input th:field ="*{nombre}" class="form-control" id="nombre" type="text" placeholder="Nombre del Producto" data-sb-validations="required" />
+                        <label for="nombre">Nombre Producto</label>
+                        <div class="invalid-feedback" data-sb-feedback="nombre:required">Se requiere un nombre.</div>
+                    </div>
+                    <!-- Categoria-->
+                    <div class="form-floating mb-3">
+                        <input th:field="*{categoria}" class="form-control" id="categoria" type="text" placeholder="Categoria" data-sb-validations="required" />
+                        <label for="categoria">Categoria</label>
+                        <div class="invalid-feedback" data-sb-feedback="categoria:required">La categoria es requerido.</div>
+                    </div>
+                    <!-- Precio input-->
+                    <div class="form-floating mb-3">
+                        <input th:field="*{Precio}" class="form-control" id="precio" type="text" placeholder="Precio" data-sb-validations="required" />
+                        <label for="precio">Precio</label>
+                        <div class="invalid-feedback" data-sb-feedback="precio:required">Se requiere asignar un valor.</div>
+                        <div class="invalid-feedback" data-sb-feedback="precio:precio">Debe ingresar un dato numerico.</div>
+                    </div>
+                    <!-- Cantidad-->
+                    <div class="form-floating mb-3">
+                        <input th:field="*{cantidad}" class="form-control" id="cantidad" type="number" placeholder="Cantidad" data-sb-validations="required" />
+                        <label for="cantidad">Cantidad</label>
+                        <div class="invalid-feedback" data-sb-feedback="cantidad:required">Cantidad requerida.</div>
+                    </div>
+                    <!-- Imagen-->
+                    <div class="form-floating mb-3">
+                        <input th:field="*{imagen}" class="form-control" id="imagen" type="url" placeholder="Imagen" data-sb-validations="required" />
+                        <label for="imagen">Imagen</label>
+                        <div class="invalid-feedback" data-sb-feedback="imagen:required"> Ingrese el Url de la imagen del producto.</div>
+                    </div>
+
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3">
+                            <div class="fw-bolder text-danger ">El formulario se ha enviado correctamente!</div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error al enviar el mensaje!</div></div>
+                    <!-- Submit Button-->
+                    <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer-->
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <!-- Footer Location-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Ubicación</h4>
+                <p class="lead mb-0">
+                    2215 John Daniel Drive
+                    <br />
+                    Clark, MO 65243
+                </p>
+            </div>
+            <!-- Footer Social Icons-->
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Web Social</h4>
+                <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-linkedin-in"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
+            </div>
+            <!-- Footer signup Text-->
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">Acerca de ...</h4>
+                <p class="lead mb-0">
+                    Todo para sus mascotas, created by
+                    <a href="/index">Start Pets</a>
+                    .
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Copyright Section-->
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright &copy; startpets 2023</small></div>
+</div>
+
+
+
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
