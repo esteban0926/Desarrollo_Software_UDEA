@@ -150,9 +150,9 @@
                                     <h3 class="card-text" th:text = "${product.categoria}"></h3>
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button type="button" class="btn btn-secondary incrementButton" style="margin-right: 5px;">+</button>
-                                        <input type="text" class="quantity form-control text-center" value="1" style="width: 45px;">
-                                        <button type="button" class="btn btn-secondary decrementButton" style="margin-left: 5px">-</button>
+                                        <button type="button" class="btn btn-secondary incrementButton plus" style="margin-right: 5px;">+</button>
+                                        <input type="text" class="quantity form-control text-center num" value="1" style="width: 45px;">
+                                        <button type="button" class="btn btn-secondary decrementButton minus" style="margin-left: 5px">-</button>
                                     </div>
                                     <div class="mt-4">
                                         <button class="btn btn-primary">
