@@ -40,7 +40,7 @@
 
 <!-- Product Section-->
 <section  class="page-section mt-4" id="Product">
-    <div style="border: 1px solid darkred" class="container-fluid">
+    <div class="container-fluid">
         <!-- Product Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Lista de Productos</h2>
         <!-- Icon Divider-->
@@ -76,10 +76,8 @@
                             <td th:text="${producto.total}"></td>
                             <td><img class="img-fluid w-75 mx-auto" th:src="${producto.imagen}"></td>
                             <td>
-                                <a th:href="@{/updateproduct/{id}(id=${producto.id})}"
-                                   class="btn btn-primary">Update</a>
-                                <a th:href="@{/deleteProduct/{id}(id=${producto.id})}"
-                                   class="btn btn-danger">Delete</a>
+                                <a th:href="@{/editProduct/{id}(id=${producto.id})}" class="btn btn-primary">Update</a>
+                                <a th:href="@{/deleteProduct/{id}(id=${producto.id})}" class="btn btn-danger">Delete</a>
                             </td>
 
                         </tr>

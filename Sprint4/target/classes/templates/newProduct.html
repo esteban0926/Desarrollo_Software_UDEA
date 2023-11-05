@@ -67,7 +67,7 @@
                     </div>
                     <!-- Precio input-->
                     <div class="form-floating mb-3">
-                        <input th:field="*{Precio}" class="form-control" id="precio" type="text" placeholder="Precio" data-sb-validations="required" />
+                        <input th:field="*{precio}" class="form-control" id="precio" type="text" placeholder="Precio" data-sb-validations="required" />
                         <label for="precio">Precio</label>
                         <div class="invalid-feedback" data-sb-feedback="precio:required">Se requiere asignar un valor.</div>
                         <div class="invalid-feedback" data-sb-feedback="precio:precio">Debe ingresar un dato numerico.</div>
@@ -94,7 +94,7 @@
 
                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error al enviar el mensaje!</div></div>
                     <!-- Submit Button-->
-                    <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Enviar</button>
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Enviar</button>
                 </form>
             </div>
         </div>

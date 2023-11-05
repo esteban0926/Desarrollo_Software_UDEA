@@ -23,9 +23,9 @@ public class FrontController {
     }
 
     @GetMapping("/products")
-    public String product(Model model) {
-        List<Product> products = productService.getProducts();
-        model.addAttribute("products", products);
+    public String getproducts(Model model) {
+        List<Product> productList = productService.getProducts();
+        model.addAttribute("products", productList);
         return "product";
     }
     @GetMapping("/newProduct")
@@ -34,9 +34,17 @@ public class FrontController {
         model.addAttribute("product", product);
         return "newProduct";
     }
+    @GetMapping("/editProduct/{id}")
+    public String editProduct(@PathVariable Integer id, Model model){
+        Product product = productService.getProductById(id);
+        if (product !=null){
+            model.addAttribute("product",product);
+            return "editProduct";
+        }else {
+            return "redirect:/products";
+        }
 
-
-
+    }
     @GetMapping("/signup")
     public String registro(Model model) {
         User usuario = new User();

@@ -4,7 +4,6 @@ import com.udea.Spint3.entity.Product;
 import com.udea.Spint3.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ProductService {
     }
 
     //Metodo para obtener un producto por su ID.
-    public Product getProductId(Integer id) {
+    public Product getProductById(Integer id) {
         return productRepository.findById(id).orElse(null);
     }
 
@@ -44,4 +43,4 @@ public class ProductService {
         return "Has eliminado el producto con el ID: " + id;
     }
 
-}
+        }

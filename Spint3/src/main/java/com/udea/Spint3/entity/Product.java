@@ -12,11 +12,11 @@ public class Product {
     @Column
     private String categoria;
     @Column
-    private double Precio;
+    private double precio;
     @Column
     private int cantidad;
     @Column
-    private double Total;
+    private double total;
     @Column
     private String imagen;
 
@@ -46,11 +46,11 @@ public class Product {
     }
 
     public double getPrecio() {
-        return Precio;
+        return precio;
     }
 
     public void setPrecio(double precio) {
-        Precio = precio;
+        precio = precio;
     }
 
     public int getCantidad() {
@@ -62,11 +62,11 @@ public class Product {
     }
 
     public double getTotal() {
-        return Total;
+        return total;
     }
 
     public void setTotal(double total) {
-        Total = total;
+        total = total;
     }
 
     public String getImagen() {
