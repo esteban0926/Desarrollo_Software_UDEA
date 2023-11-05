@@ -53,3 +53,23 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+//conuter
+const plus = document.querySelector('.plus');
+
+const num = document.querySelector('.num');
+
+const minus = document.querySelector('.minus');
+
+let i = 0;
+
+plus.addEventListener("click", () => {
+i++;
+num.innerHTML = i;
+
+});
+
+minus.addEventListener("click", () => {
+i--;
+num.innerHTML = i;
+});
+
