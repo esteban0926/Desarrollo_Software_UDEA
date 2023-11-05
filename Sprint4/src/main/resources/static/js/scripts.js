@@ -53,3 +53,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+//conuter
+const plus = document.querySelector('.plus');
+
+
+let i = 0;
+
+plus.addEventListener();
