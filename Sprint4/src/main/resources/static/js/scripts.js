@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-});
+
 
 //conuter
 const plus = document.querySelector('.plus');
@@ -69,7 +69,11 @@ num.innerHTML = i;
 });
 
 minus.addEventListener("click", () => {
+if(parseInt(num.innerHTML)>0){
 i--;
 num.innerHTML = i;
+}
+});
+
 });
 
