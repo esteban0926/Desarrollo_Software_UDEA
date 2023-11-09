@@ -4,6 +4,8 @@ import com.udea.Spint3.entity.Product;
 import com.udea.Spint3.entity.User;
 import com.udea.Spint3.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,10 @@ public class FrontController {
     ProductService productService;
 
     @GetMapping({"/", "/index"})
-    public String Index(Model model) {
+    public String Index(Model model, @AuthenticationPrincipal OidcUser principal) {
+        if (principal !=null){
+            model.addAttribute("profile", principal.getClaims());
+        }
         List<Product> products = productService.getProducts();
         model.addAttribute("products", products);
         return "index";
@@ -50,6 +55,13 @@ public class FrontController {
         User usuario = new User();
         model.addAttribute("usuario", usuario);
         return "signup";
+
+    }
+
+    @GetMapping("/login")
+    public String login() {
+
+        return "login";
 
     }
 

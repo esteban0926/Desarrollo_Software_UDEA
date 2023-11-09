@@ -32,7 +32,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/}">Productos</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/signup}">Registrarse</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/login}">Login</a></li>
             </ul>
         </div>
     </div>
@@ -51,7 +51,7 @@
         </div>
         <!-- Product Section Form-->
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
+            <div class="">
                 <table id="productos" class="table table-secondary table-sm table-bordered text-nowrap " >
                     <thead class="">
                     <tr>
@@ -74,7 +74,7 @@
                             <td th:text="${producto.precio}"></td>
                             <td th:text="${producto.cantidad}"></td>
                             <td th:text="${producto.total}"></td>
-                            <td><img class="img-fluid w-75 mx-auto" th:src="${producto.imagen}"></td>
+                            <td width="20%"><img class="img-fluid mx-auto w-25" th:src="${producto.imagen}"></td>
                             <td>
                                 <a th:href="@{/editProduct/{id}(id=${producto.id})}" class="btn btn-primary">Update</a>
                                 <a th:href="@{/deleteProduct/{id}(id=${producto.id})}" class="btn btn-danger">Delete</a>

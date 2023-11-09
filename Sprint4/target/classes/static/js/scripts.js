@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', event => {
             target: '#mainNav',
             rootMargin: '0px 0px -40%',
         });
-    };
+    }
+    ;
 
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -51,5 +52,26 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
+    //conteo
+/*    const plus = document.querySelector('.plus');
+    const minus = document.querySelector('.minus');
+    const num = document.querySelector('.num');
+
+    let i = 0;
+
+    plus.addEventListener("click", () => {
+        i++;
+        num.innerHTML = i;
+    });
+
+    minus.innerHTML("click", () => {
+        if (parseInt(num.innerHTML) > 0 ){
+            i--;
+            num.innerHTML = i;
+        }
+    });*/
+
+
 });
+
 

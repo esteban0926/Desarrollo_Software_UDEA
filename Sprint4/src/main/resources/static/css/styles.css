@@ -2031,11 +2031,11 @@ progress {
 }
 .form-control::-moz-placeholder {
   color: #6c757d;
-  opacity: 1;
+  opacity: 0.5;
 }
 .form-control::placeholder {
   color: #6c757d;
-  opacity: 1;
+  opacity: 0.5;
 }
 .form-control:disabled {
   background-color: #e9ecef;
@@ -8130,6 +8130,11 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-login{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-green-rgb), var(--bs-bg-opacity)) !important;
+}
+
 .bg-secondary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
@@ -11044,3 +11049,85 @@ html {
 .copyright {
   background-color: #1a252f;
 }
+
+.content{
+  width: 430px;
+  border-right: 10px;
+  border-radius: 30px;
+  padding: 40px 30px;
+  margin-top: 20px;
+  box-shadow: -3px -3px 9px #eeedec,
+  3px 3px 7px rgba(221, 220, 217, 0.671);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  width: 320px;
+  padding: 10px;
+  padding-top: 30px;
+}
+
+.login__field {
+  padding: 20px 0px;
+  position: relative;
+}
+
+.login__icon {
+  position: absolute;
+  top: 30px;
+  color: #e1f2e9;
+}
+
+.login__input {
+  border: none;
+  border-bottom: 2px solid #d1d4d2;
+  background: transparent;
+  padding: 10px;
+  padding-left: 28px;
+  font-weight: 500;
+  width: 85%;
+  transition: .2s;
+  color: cornsilk;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+  outline: none;
+  border-bottom-color: #679e94;
+}
+
+.login__submit {
+  background: #fff;
+  font-size: 14px;
+  margin-top: 30px;
+  padding: 16px 20px;
+  border-radius: 26px;
+  border: 1px solid #D4D3E8;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #489d75;
+  box-shadow: 0px 2px 2px #56967c;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+  border-color: #679e94;
+  outline: none;
+}
+
+.button__icon {
+  font-size: 24px;
+  margin-left: auto;
+  color: #e1f2e9;
+}
+
+

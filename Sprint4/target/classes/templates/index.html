@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html     xmlns="http://www.w3.org/1999/xhtml"
-          xmlns:th="http://www.thymeleaf.org" lang="es">
+          xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+          lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,13 +28,19 @@
             Menu
             <i class="fas fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse" id="navbarResponsive" >
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#productos">Productos</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/newProduct}">Nuevo producto</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/signup}">Registrarse</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/products}">Cambiar Producto</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
+                <div sec:authorize="!isAuthenticated()">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/login}">Login</a></li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" th:href="@{/logout}">Salir</a></li>
+                </div>
+
 
 
             </ul>
@@ -40,7 +48,7 @@
     </div>
 </nav>
 <!-- Masthead-->
-<header class="masthead bg-primary text-white text-center">
+<header class="masthead bg-primary text-white text-center" >
     <div class="container d-flex align-items-center flex-column">
         <!-- Masthead Avatar Image-->
         <img class="masthead-avatar mb-5" src="/assets/img/pngtree-dog-and-cats.png" alt="..." />
@@ -55,9 +63,10 @@
         <!-- Masthead Subheading-->
         <p class="masthead-subheading font-weight-light mb-0">Productos para mascotas</p>
     </div>
+
 </header>
 <!-- Productos section -->
-<section class="page-section producto" id="productos">
+<section class="page-section producto " id="productos">
     <div class="container">
         <!-- Products Section Heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Nuestros Productos</h2>
@@ -128,7 +137,7 @@
 
         <!-- producto Modals-->
         <!-- producto Modal 1-->
-        <div th:each="product : ${products}" class="producto-modal modal fade" th:id="${'productoModal'+product.id}" tabindex="-1" aria-labelledby="productoModal1" aria-hidden="true">
+        <div th:each="product : ${products}" class="producto-modal modal fade" th:id="${'productoModal'+product.id}" tabindex="-1" th:aria-labelledby="${'productoModal'+product.id}" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -150,9 +159,9 @@
                                     <h3 class="card-text" th:text = "${product.categoria}"></h3>
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
                                     <div class="d-flex justify-content-center align-items-center">
-                                        <button type="button" class="btn btn-secondary incrementButton" style="margin-right: 5px;">+</button>
-                                        <input type="text" class="quantity form-control text-center" value="1" style="width: 45px;">
-                                        <button type="button" class="btn btn-secondary decrementButton" style="margin-left: 5px">-</button>
+                                        <button type="button" class="minus btn btn-secondary incrementButton" style="margin-right: 5px;">-</button>
+                                        <span class="quantity form-control text-center num" style="width: 45px;">0</span>
+                                        <button type="button" class="plus btn btn-secondary decrementButton" style="margin-left: 5px">+</button>
                                     </div>
                                     <div class="mt-4">
                                         <button class="btn btn-primary">
