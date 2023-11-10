@@ -158,11 +158,12 @@
                                     <!-- producto Modal - Text-->
                                     <h3 class="card-text" th:text = "${product.categoria}"></h3>
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
-                                    <div class="d-flex justify-content-center align-items-center">
+                                    <div class=" product d-flex justify-content-center align-items-center">
                                         <button type="button" class="minus btn btn-secondary incrementButton" style="margin-right: 5px;">-</button>
                                         <span class="quantity form-control text-center num" style="width: 45px;">0</span>
                                         <button type="button" class="plus btn btn-secondary decrementButton" style="margin-left: 5px">+</button>
                                     </div>
+
                                     <div class="mt-4">
                                         <button class="btn btn-primary">
                                             <i class="fas fa-plus fa-fw"></i>
@@ -178,6 +179,27 @@
             </div>
         </div>
 
+
+<!-- Funcionalidad de los botones de decremento e incremento-->
+<script>
+    document.querySelectorAll('.product').forEach(function(product) {
+  const minusButton = product.querySelector('.incrementButton');
+  const plusButton = product.querySelector('.decrementButton');
+  const quantityElement = product.querySelector('.quantity');
+
+  minusButton.addEventListener('click', function() {
+    let currentQuantity = parseInt(quantityElement.textContent);
+    if (currentQuantity > 0) {
+      quantityElement.textContent = currentQuantity - 1;
+    }
+  });
+
+  plusButton.addEventListener('click', function() {
+    let currentQuantity = parseInt(quantityElement.textContent);
+    quantityElement.textContent = currentQuantity + 1;
+  });
+});
+</script>
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

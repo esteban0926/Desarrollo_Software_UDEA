@@ -8,52 +8,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
+
     @Autowired
     private TransactionRepository transactionRepository;
-    @Autowired
-    private UserRepository userRepository;
 
-    //Metodo para consultar todas las transacciones.
-    public List<Transaction> getTransactions(){
+    public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
 
-    //Metodo para consultar transacciones por ID
-    public List <Transaction> getTransactionByUserId(Integer userId) {
-        return transactionRepository.findByUserId(userId);
+    public Transaction getTransactionById(Integer id) {
+        Optional<Transaction> transaction = transactionRepository.findById(id);
+        return transaction.orElse(null);
     }
 
-    //Metodo para guardar movimiento nuevo
-    public Transaction saveTransaction(Integer userId, Transaction transaction) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            transaction.setUser(user);
+    public Transaction createTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+
+    public Transaction updateTransaction(Integer id, Transaction updatedTransaction) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+
+        if (optionalTransaction.isPresent()) {
+            Transaction transaction = optionalTransaction.get();
+            transaction.setProducto(updatedTransaction.getProducto());
+            transaction.setPrecio(updatedTransaction.getPrecio());
+            transaction.setCantidad(updatedTransaction.getCantidad());
+            transaction.setTotal(updatedTransaction.getPrecio() * updatedTransaction.getCantidad()); // Calcular total
+            transaction.setUser(updatedTransaction.getUser());
+
             return transactionRepository.save(transaction);
+        } else {
+            return null; // Manejo de error si la transacción no existe
         }
-        return null;
     }
-        //Metodo para actualizar transaccion
-        public Transaction updateTransaction(Integer userId, Integer transactionId, Transaction transaction){
-            Transaction existing = transactionRepository.findById(transactionId).orElse(null);
-            if (existing != null && existing.getUser().getId().equals(userId)) {
-                transaction.setId(transactionId);
-                transaction.setUser(existing.getUser());
-                return transactionRepository.save(transaction);
-            }
-            return null;
-        }
-        // Metodo para eliminar transaccion
-        public String deleteTransaction (Integer userId, Integer transactionId){
-            Transaction existing = transactionRepository.findById(transactionId).orElse(null);
-            if (existing != null && existing.getUser().getId().equals(userId)) {
-                transactionRepository.deleteById(transactionId);
-                return "Has elmininado la transaccion con el ID: " +transactionId;
-            }else {
-                return "No se pudo eliminar la transaccion";
-            }
-        }
-}
 
+    public void deleteTransaction(Integer id) {
+        transactionRepository.deleteById(id);
+    }
+}

@@ -10,16 +10,19 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
     @Column
-    public double montoTransaccion;
+    public String producto;
     @Column
-    public String concepto;
+    public double precio;
     @Column
-    public  String usuarioTransaccion;
+    public int cantidad;
+    @Column
+    public double total;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    //Getter y setter
+    //getter y setter
+
 
     public Integer getId() {
         return id;
@@ -29,28 +32,36 @@ public class Transaction {
         this.id = id;
     }
 
-    public double getMontoTransaccion() {
-        return montoTransaccion;
+    public String getProducto() {
+        return producto;
     }
 
-    public void setMontoTransaccion(double montoTransaccion) {
-        this.montoTransaccion = montoTransaccion;
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
-    public String getConcepto() {
-        return concepto;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
-    public String getUsuarioTransaccion() {
-        return usuarioTransaccion;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setUsuarioTransaccion(String usuarioTransaccion) {
-        this.usuarioTransaccion = usuarioTransaccion;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public User getUser() {
