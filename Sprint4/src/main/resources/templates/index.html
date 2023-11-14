@@ -31,18 +31,16 @@
         <div class="collapse navbar-collapse" id="navbarResponsive" >
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#productos">Productos</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/newProduct}">Nuevo producto</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/signup}">Registrarse</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/products}">Cambiar Producto</a></li>
+                <div sec:authorize="isAuthenticated()" style="display: flex; flex-direction: row; flex-wrap: nowrap;">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/newProduct}">Nuevo producto</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/products}">Cambiar Producto</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" th:href="@{/logout}">Cerrar Sesión</a></li>
+                </div>
+
                 <div sec:authorize="!isAuthenticated()">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/login}">Login</a></li>
                 </div>
-                <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" th:href="@{/logout}">Salir</a></li>
-                </div>
-
-
-
             </ul>
         </div>
     </div>
@@ -158,13 +156,18 @@
                                     <!-- producto Modal - Text-->
                                     <h3 class="card-text" th:text = "${product.categoria}"></h3>
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
-                                    <div class=" product d-flex justify-content-center align-items-center">
+                                    <div sec:authorize="!isAuthenticated()">
+                                        <p class="text-lg-center text-danger text-uppercase">Debes estar registrado, para añadir un producto o haber iniciado sesión</p>
+                                        <a class="btn btn-primary" th:href="@{/login}">Login</a>
+                                        <a class="btn btn-secondary" th:href="@{/signup}">Registrarse</a>
+                                    </div>
+                                    <div sec:authorize="isAuthenticated()" class=" product d-flex justify-content-center align-items-center">
                                         <button type="button" class="minus btn btn-secondary incrementButton" style="margin-right: 5px;">-</button>
                                         <span class="quantity form-control text-center num" style="width: 45px;">0</span>
                                         <button type="button" class="plus btn btn-secondary decrementButton" style="margin-left: 5px">+</button>
                                     </div>
 
-                                    <div class="mt-4">
+                                    <div sec:authorize="isAuthenticated()" class="mt-4">
                                         <button class="btn btn-primary">
                                             <i class="fas fa-plus fa-fw"></i>
                                             Añadir
