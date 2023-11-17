@@ -31,18 +31,17 @@
         <div class="collapse navbar-collapse" id="navbarResponsive" >
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#productos">Productos</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/newProduct}">Nuevo producto</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/signup}">Registrarse</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/products}">Cambiar Producto</a></li>
+                <div sec:authorize="isAuthenticated()" style="display: flex; flex-direction: row; flex-wrap: nowrap;">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/newProduct}">Nuevo producto</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/products}">Cambiar Producto</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" th:href="@{/logout}">Cerrar Sesión</a></li>
+                </div>
+
                 <div sec:authorize="!isAuthenticated()">
+                    <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" th:href="@{/login}">Login</a></li>
                 </div>
-                <div sec:authorize="isAuthenticated()">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded text-warning" th:href="@{/logout}">Salir</a></li>
-                </div>
-
-
-
             </ul>
         </div>
     </div>
@@ -80,7 +79,7 @@
         <div class="row justify-content-center align-content-center">
             <!-- productos items -->
             <div th:each="product : ${products}" class="col-md-6 col-lg-4 mb-5">
-                <div class="producto-item mx-auto" data-bs-toggle="modal" th:data-bs-target="${'#productoModal' + product.id}">
+                <div class="producto-item mx-auto" data-bs-toggle="modal" th:data-bs-target="${'#productoModal' + product.id}" data-product-price="${product.precio}">
                     <div class="producto-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                         <div class="producto-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                     </div>
@@ -88,6 +87,8 @@
                     <img class="img-fluid w-75 mx-auto" th:src="${product.imagen}" th:alt="${product.nombre}"  >
                     <h4 class="text-uppercase mb-0 mt-3" th:text ="${product.nombre}"></h4>
                     </div>
+                    <!-- Área del total general dentro de la ficha del producto -->
+
                 </div>
             </div>
         </div>
@@ -95,9 +96,7 @@
     </div>
 </section>
 
-
-
-        <!-- Footer-->
+<!-- Footer-->
 <footer class="footer text-center">
     <div class="container">
         <div class="row">
@@ -158,17 +157,21 @@
                                     <!-- producto Modal - Text-->
                                     <h3 class="card-text" th:text = "${product.categoria}"></h3>
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
-                                    <div class=" product d-flex justify-content-center align-items-center">
+                                    <div sec:authorize="!isAuthenticated()">
+                                        <p class="text-lg-center text-danger text-uppercase">Debes estar registrado, para añadir un producto o haber iniciado sesión</p>
+                                        <a class="btn btn-primary" th:href="@{/login}">Login</a>
+                                        <a class="btn btn-secondary" th:href="@{/signup}">Registrarse</a>
+                                    </div>
+                                    <div sec:authorize="isAuthenticated()" class=" product d-flex justify-content-center align-items-center">
                                         <button type="button" class="minus btn btn-secondary incrementButton" style="margin-right: 5px;">-</button>
                                         <span class="quantity form-control text-center num" style="width: 45px;">0</span>
                                         <button type="button" class="plus btn btn-secondary decrementButton" style="margin-left: 5px">+</button>
                                     </div>
 
-                                    <div class="mt-4">
-                                        <button class="btn btn-primary">
-                                            <i class="fas fa-plus fa-fw"></i>
-                                            Añadir
-                                        </button>
+                                    <div sec:authorize="isAuthenticated()" class="mt-4">
+                                        <a th:href="@{/addCar/{id}(id=${product.id}, cantidad=${cantidadElegida})}" class="btn btn-primary add-product-btn" id="addButton" data-product-id="${product.id}">
+                                            <i class="fas fa-plus fa-fw"></i>Añadir</button>
+                                            </a>
                                     </div>
 
                                 </div>
@@ -179,31 +182,60 @@
             </div>
         </div>
 
-
-<!-- Funcionalidad de los botones de decremento e incremento-->
+<!-- Script para manejar la cantidad y la adición al carrito -->
 <script>
-    document.querySelectorAll('.product').forEach(function(product) {
-  const minusButton = product.querySelector('.incrementButton');
-  const plusButton = product.querySelector('.decrementButton');
-  const quantityElement = product.querySelector('.quantity');
+    document.addEventListener('DOMContentLoaded', function() {
+        const incrementButtons = document.querySelectorAll('.incrementButton');
+        const decrementButtons = document.querySelectorAll('.decrementButton');
+        const addToCartButtons = document.querySelectorAll('.add-product-btn');
+        const quantityElements = document.querySelectorAll('.num');
 
-  minusButton.addEventListener('click', function() {
-    let currentQuantity = parseInt(quantityElement.textContent);
-    if (currentQuantity > 0) {
-      quantityElement.textContent = currentQuantity - 1;
-    }
-  });
+        function handleIncrement(event) {
+            const index = Array.from(incrementButtons).indexOf(event.target);
+            let currentQuantity = parseInt(quantityElements[index].textContent);
+            quantityElements[index].textContent = currentQuantity - 1;
+        }
 
-  plusButton.addEventListener('click', function() {
-    let currentQuantity = parseInt(quantityElement.textContent);
-    quantityElement.textContent = currentQuantity + 1;
-  });
-});
+        function handleDecrement(event) {
+            const index = Array.from(decrementButtons).indexOf(event.target);
+            let currentQuantity = parseInt(quantityElements[index].textContent);
+            quantityElements[index].textContent = currentQuantity + 1;
+        }
+
+        function handleAddToCart(event) {
+            const index = Array.from(addToCartButtons).indexOf(event.target);
+            const productId = addToCartButtons[index].getAttribute('data-product-id');
+            const quantity = parseInt(quantityElements[index].textContent);
+
+            if (!isNaN(quantity) && quantity > 0) {
+                window.location.href = `/addCar/${productId}?cantidad=${quantity}`;
+                alert('El producto ha sido añadido al carrito');
+            } else {
+                alert('Ingrese una cantidad válida');
+                // Evitar la redirección si la cantidad no es válida
+                event.preventDefault();
+            }
+        }
+
+        incrementButtons.forEach(button => {
+            button.addEventListener('click', handleIncrement);
+        });
+
+        decrementButtons.forEach(button => {
+            button.addEventListener('click', handleDecrement);
+        });
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', handleAddToCart);
+        });
+    });
 </script>
+
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
+
 <script src="js/scripts.js"></script>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <!-- * *                               SB Forms JS                               * *-->

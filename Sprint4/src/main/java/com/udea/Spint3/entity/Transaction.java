@@ -3,7 +3,7 @@ package com.udea.Spint3.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "transaction")
 public class Transaction {
 
     @Id
@@ -11,6 +11,8 @@ public class Transaction {
     public Integer id;
     @Column
     public String producto;
+    @Column
+    public String categoria;
     @Column
     public double precio;
     @Column
@@ -70,5 +72,13 @@ public class Transaction {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

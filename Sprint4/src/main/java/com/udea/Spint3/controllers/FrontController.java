@@ -48,7 +48,10 @@ public class FrontController {
         }else {
             return "redirect:/products";
         }
-
+    }
+    @GetMapping("/addCar/{id}")
+    public String getAddCarPage(@PathVariable("id") Long productId, Model model) {
+        return "addCar";
     }
     @GetMapping("/signup")
     public String registro(Model model) {
@@ -64,9 +67,13 @@ public class FrontController {
         return "login";
 
     }
-
-
 }
+
+
+
+
+
+
 
 
 
