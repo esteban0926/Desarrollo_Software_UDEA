@@ -58,10 +58,10 @@ public class FrontController {
 
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login/oauth2")
     public String login() {
 
-        return "login";
+        return "index";
 
     }
 
