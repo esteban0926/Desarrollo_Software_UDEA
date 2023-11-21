@@ -159,7 +159,7 @@
                                     <h4 class="card-text text-warning" th:text = "'$' + ${product.precio}"></h4>
                                     <div sec:authorize="!isAuthenticated()">
                                         <p class="text-lg-center text-danger text-uppercase">Debes estar registrado, para añadir un producto o haber iniciado sesión</p>
-                                        <a class="btn btn-primary" th:href="@{/login}">Login</a>
+                                        <a class="btn btn-primary" th:href="@{/login/oauth2}">Login</a>
                                         <a class="btn btn-secondary" th:href="@{/signup}">Registrarse</a>
                                     </div>
                                     <div sec:authorize="isAuthenticated()" class=" product d-flex justify-content-center align-items-center">
@@ -169,7 +169,7 @@
                                     </div>
 
                                     <div sec:authorize="isAuthenticated()" class="mt-4">
-                                        <a th:href="@{/addCar/{id}(id=${product.id}, cantidad=${cantidadElegida})}" class="btn btn-primary add-product-btn" id="addButton" data-product-id="${product.id}">
+                                        <a href="#" class="btn btn-primary add-product-btn" id="addButton" data-product-id="${product.id}">
                                             <i class="fas fa-plus fa-fw"></i>Añadir</button>
                                             </a>
                                     </div>
@@ -204,12 +204,13 @@
 
         function handleAddToCart(event) {
             const index = Array.from(addToCartButtons).indexOf(event.target);
-            const productId = addToCartButtons[index].getAttribute('data-product-id');
             const quantity = parseInt(quantityElements[index].textContent);
 
             if (!isNaN(quantity) && quantity > 0) {
-                window.location.href = `/addCar/${productId}?cantidad=${quantity}`;
-                alert('El producto ha sido añadido al carrito');
+                const productName = document.querySelectorAll('.producto-modal-title')[index].textContent;
+                const message = `El producto "${productName}" ha sido añadido al carrito con cantidad ${quantity}.`;
+                alert(message);
+                window.location.href = "/"; // Redireccionar a la página principal
             } else {
                 alert('Ingrese una cantidad válida');
                 // Evitar la redirección si la cantidad no es válida
