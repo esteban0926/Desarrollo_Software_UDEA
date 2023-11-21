@@ -64,7 +64,7 @@ public class FrontController {
     @GetMapping("/login/oauth2")
     public String login() {
 
-        return "index";
+        return "redirect:/index";
 
     }
 }
